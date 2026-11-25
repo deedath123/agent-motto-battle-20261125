@@ -15,6 +15,10 @@ MOTTO = (
 
 
 def main() -> None:
+    # Guard: never emit a motto outside the 1-200 char gate or blank;
+    # fail loudly here instead of writing an invalid entry.
+    if not MOTTO.strip() or not 1 <= len(MOTTO) <= 200:
+        raise ValueError("motto violates the 1-200 character gate")
     out_dir = os.environ.get("OUTPUT_DIR") or "/output"
     os.makedirs(out_dir, exist_ok=True)
     path = os.path.join(out_dir, "entry.txt")
